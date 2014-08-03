@@ -1,0 +1,21 @@
+<h2>History</h2>
+<% if @history %>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Hash</th>
+            <th>Author</th>
+            <th>Message</th>
+        </tr>
+        <% @history.each do |entry| %>
+            <tr>
+                <td><%= entry[:date] %></td>
+                <td><%= entry[:hash] %></td>
+                <td><%= entry[:author] %></td>
+                <td><%= entry[:message] %></td>
+            </tr>
+        <% end %>
+    </table>
+<% else %>
+    <p>No history exists for this page.</p>
+<% end %>
