@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>Wiki</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="<%= url("/css/style.css") %>">
+    <link rel="icon" type="image/png" href="<%= url("/img/favicon.png") %>">
 </head>
 <body>
     <header id="main">
         <div id="header">
-            <a href="/"><h1 id="logo">Wiki</h1></a>
+            <a href="<%= url("/") %>"><h1 id="logo">Wiki</h1></a>
             <nav id="header">
                 <ul>
-                    <li><a href="/<%= @path %>/edit">Edit</a></li>
-                    <li><a href="/<%= @path %>/move">Move</a></li>
-                    <li><a href="/<%= @path %>/delete">Delete</a></li>
-                    <li><a href="/<%= @path %>/history">History</a></li>
+                    <li><a href="<%= url("#{@path}/edit") %>">Edit</a></li>
+                    <li><a href="<%= url("#{@path}/move") %>">Move</a></li>
+                    <li><a href="<%= url("#{@path}/delete") %>">Delete</a></li>
+                    <li><a href="<%= url("#{@path}/history") %>">History</a></li>
                 </ul>
             </nav>
         </div>

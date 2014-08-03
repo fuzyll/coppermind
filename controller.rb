@@ -89,14 +89,18 @@ module Wiki
         def self.history(path)
             commits = []
 
-            Repository.log.object("#{path}.md").each do |entry|
-                commit = {
-                    :message => entry.message,
-                    :date => entry.date.strftime("%Y-%m-%d at %H:%M:%S %Z"),
-                    :author => entry.author.name,
-                    :hash => entry.sha
-                }
-                commits << commit
+            begin
+                Repository.log.object("#{path}.md").each do |entry|
+                    commit = {
+                        :message => entry.message,
+                        :date => entry.date.strftime("%Y-%m-%d at %H:%M:%S %Z"),
+                        :author => entry.author.name,
+                        :hash => entry.sha
+                    }
+                    commits << commit
+                end
+            rescue
+                commits = nil
             end
 
             return commits
@@ -126,7 +130,7 @@ module Wiki
         end
 
         get "/?" do
-            redirect to "/index"
+            redirect to "/main"
         end
 
         get "/*/edit/?" do
