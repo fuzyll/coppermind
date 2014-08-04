@@ -1,0 +1,4 @@
+{
+    "public_folder": "./content",
+    "base_url": "http://localhost:9393/"
+}

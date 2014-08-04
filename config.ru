@@ -15,6 +15,13 @@ if ENV["RACK_ENV"] == "production"
     STDERR.reopen(log)
 end
 
+# create the git repository if it doesn't already exist
+begin
+    system("git", "init", "./pages") unless File.exists?("./pages/.git")
+rescue
+    abort "Could not find or create git repository"
+end
+
 # run our application
 require "./controller"
 run Wiki::Application

@@ -1,6 +1,6 @@
 <h2>Delete</h2>
 <p>Please enter a reason for deleting page <%= @path %>:</p>
-<form action="<%= url("#{@path}/delete" %>" method="post">
+<form action="<%= @path %>/delete" method="post">
     <textarea id="summary" name="summary" placeholder="Summary of Changes"></textarea>
     <input type="submit" value="Commit">
 </form>

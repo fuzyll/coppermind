@@ -22,108 +22,37 @@
 # IN THE SOFTWARE.
 ##
 
+require "./page"
+
 module Wiki
-    # create or use existing git repository for holding notes
-    system("git", "init", "./pages") unless File.exists?("./pages/.git")  # FIXME: should maybe do this in a Rakefile?
-    Repository = Git.open("./pages")  # FIXME: should gracefully fail with a special error page if this doesn't work
-
-    # create a markdown renderer to convert notes to html
-    # FIXME: does Sinatra/Rack's "markdown" handler finally support this stuff now? (should double-check)
-    renderer = Redcarpet::Render::HTML.new(:filter_html => true, :no_styles => true, :with_toc_data => true)
-    extensions = { :no_intra_emphasis => true, :tables => true, :fenced_code_blocks => true,
-                   :strikethrough => true, :space_after_headers => true, :superscript => true }
-    Markdown = Redcarpet::Markdown.new(renderer, extensions)
-
-    # FIXME: does this even need to be a class..?
-    class Page
-        def self.content(path)
-            begin
-                object = Repository.object("HEAD:#{path}.md")
-            rescue Exception => e
-                STDERR.puts e.message  # FIXME: DEBUG MESSAGE
-                return ""
-            end
-            return object.contents
-        end
-
-        def self.update(path, data, message)
-            # do nothing if no data was modified
-            return if data == Page.content(path)
-
-            # create subdirectories if they don't already exist
-            mkdir(path)
-
-            # write data to file
-            File.open("./pages/#{path}.md", "w") do |f|
-                f.write(data)
-            end
-
-            # commit changes to repository
-            Dir.chdir("./pages") do
-                Repository.add("#{path}.md")
-            end
-            Repository.commit(message)
-
-            return
-        end
-
-        def self.move(old, new, message)
-            # create subdirectories if they don't already exist
-            mkdir(new)
-
-            # move the file
-            Repository.lib.mv("#{old}.md", "#{new}.md")
-
-            # commit change to repository
-            Repository.commit(message)
-        end
-
-        def self.delete(path, message)
-            # delete the file
-            Repository.lib.remove("#{path}.md")
-
-            # commit change to repository
-            Repository.commit(message)
-        end
-
-        def self.history(path)
-            commits = []
-
-            begin
-                Repository.log.object("#{path}.md").each do |entry|
-                    commit = {
-                        :message => entry.message,
-                        :date => entry.date.strftime("%Y-%m-%d at %H:%M:%S %Z"),
-                        :author => entry.author.name,
-                        :hash => entry.sha
-                    }
-                    commits << commit
-                end
-            rescue
-                commits = nil
-            end
-
-            return commits
-        end
-
-        def self.diff(first, second)
-            # we assume first and second are the two commit hashes to compare
-            return Repository.diff(first, second).patch  # FIXME: not actually tested...
-        end
-
-    private
-        def self.mkdir(path)
-            if path.count('/') > 0
-                dirs = "./pages/#{path.split('/')[0..-2].join}"
-                FileUtils.mkpath(dirs) if !File.directory?(dirs)
-            end
-        end
+    # open the pages repository
+    begin
+        Repository = Git.open("./pages")
+    rescue
+        Repository = nil
     end
 
+    # create a custom markdown renderer with non-standard options turned on
+    renderer = Redcarpet::Render::HTML.new(:filter_html => true, :no_styles => true)
+    extensions = { :no_intra_emphasis => true, :tables => true, :fenced_code_blocks => true,
+                    :strikethrough => true, :space_after_headers => true, :superscript => true }
+    Markdown = Redcarpet::Markdown.new(renderer, extensions)
 
-    # class implementing the web application
     class Application < Sinatra::Base
-        set :public_folder, "./content"
+        # parse and set settings
+        begin
+            File.open("./settings.json", "r") do |file|
+                JSON.parse(file.read()).each do |k,v|
+                    set k, v
+                end
+            end
+        rescue Exception => e
+            abort "Could not parse settings file because: #{e.message}"
+        end
+
+        before do
+            return erb :error if Repository == nil
+        end
 
         not_found do
             return erb :missing

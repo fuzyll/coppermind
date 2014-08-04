@@ -14,12 +14,13 @@ Features:
 Wiki's only dependencies are git, a version of ruby >= 1.9, and the gems listed in the `Gemfile`. Wiki has been
 tested on Ubuntu 12.04+ and OS X 10.9+. Other platforms may work, but are unsupported at this time.
 
-To install and use, simply clone this repository, install the gems, and run the application:
+To install and use, simply clone this repository, install the gems, edit the settings file, and run the application:
 
 ```
 git clone https://github.com/fuzyll/wiki.git
 cd wiki
 bundle install --standalone
+vim settings.json  # change the base_url and other options if necessary
 bundle exec shotgun config.ru
 ```
 
