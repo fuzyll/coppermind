@@ -1,5 +1,6 @@
 *.swp
 *.log
+*.json
 *.db
 *.png
 *.woff
