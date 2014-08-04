@@ -1,5 +1,5 @@
 <h2>Edit</h2>
-<form action="/<%= @path %>/edit" method="post">
+<form action="<%= url("#{@path}/edit") %>" method="post">
     <textarea id="content" name="content" placeholder="Page Content"><%= @page %></textarea>
     <textarea id="summary" name="summary" placeholder="Summary of Changes"></textarea>
     <input type="submit" value="Commit">
