@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     git (1.2.8)
+    json (1.7.7)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -19,6 +20,7 @@ PLATFORMS
 
 DEPENDENCIES
   git
+  json
   rack
   redcarpet
   shotgun
