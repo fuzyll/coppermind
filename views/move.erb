@@ -1,7 +1,7 @@
 <h2>Move</h2>
 <p>Please enter the new path for page <%= @path %> and a reason for the move:</p>
 <form action="<%= @path %>/move" method="post">
-    <textarea id="path" name="path" placeholder="New Path"></textarea>
-    <textarea id="summary" name="summary" placeholder="Summary of Changes"></textarea>
+    <textarea id="path" name="path" placeholder="New Path" required></textarea>
+    <textarea id="summary" name="summary" placeholder="Summary of Changes" required></textarea>
     <input type="submit" value="Commit">
 </form>
