@@ -71,9 +71,11 @@ module Wiki
         post "/*/edit/?" do
             @path = params[:splat].join("/")
             @content = params[:content]
-            @summary = params[:summary]  # FIXME: should bail out if summary or content doesn't exist
-            Page.update(@path, @content, @summary)
-
+            @summary = params[:summary] 
+	    # FIXME: This bails skips the update if content or summary doesn't exist, but the user would never know why.
+            if @content && @summary
+	        Page.update(@path, @content, @summary)
+	    end
             # send the user to their new page
             redirect to "/#{@path}"
         end
