@@ -22,7 +22,7 @@
 # IN THE SOFTWARE.
 ##
 
-require "./page"
+require "./model"
 
 module Wiki
     # open the pages repository
@@ -33,9 +33,9 @@ module Wiki
     end
 
     # create a custom markdown renderer with non-standard options turned on
-    renderer = Redcarpet::Render::HTML.new(:filter_html => true, :no_styles => true)
+    renderer = Redcarpet::Render::HTML.new(:filter_html => true, :no_styles => true, :hard_wrap => true)
     extensions = { :no_intra_emphasis => true, :tables => true, :fenced_code_blocks => true,
-                    :strikethrough => true, :space_after_headers => true, :superscript => true }
+                   :strikethrough => true, :space_after_headers => true, :superscript => true }
     Markdown = Redcarpet::Markdown.new(renderer, extensions)
 
     class Application < Sinatra::Base
