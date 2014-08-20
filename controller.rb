@@ -102,8 +102,10 @@ module Wiki
 
         post "/*/delete/?" do
             @path = params[:splat].join("/")
-            @summary = params[:summary]  # FIXME: should bail out if summary doesn't exist
-            Page.delete(@path, @summary)
+            @summary = params[:summary]  # FIXME: skips delete if path or summary are missing. Next version should warn the user
+	    if @path && @summary
+                Page.delete(@path, @summary)
+	    end
             redirect to "/#{@path}"
         end
 
