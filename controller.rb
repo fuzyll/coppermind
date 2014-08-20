@@ -72,7 +72,7 @@ module Wiki
             @path = params[:splat].join("/")
             @content = params[:content]
             @summary = params[:summary] 
-	    # FIXME: This bails skips the update if content or summary doesn't exist, but the user would never know why.
+	    # FIXME: This skips the update if content or summary doesn't exist, but the user would never know why.
             if @content && @summary
 	        Page.update(@path, @content, @summary)
 	    end
@@ -88,9 +88,11 @@ module Wiki
         post "/*/move/?" do
             @path = params[:splat].join("/")
             @new_path = params[:path]
-            @summary = params[:summary]  # FIXME: should bail out if new_path or summary doesn't exist
-            Page.move(@path, @new_path, @summary)
-            redirect to "/#{@new_path}"
+            @summary = params[:summary]  # FIXME: This skips the move entirely if the new path or summarya re missing, but should probably give an error.
+            if @new_path && @summary
+	    	Page.move(@path, @new_path, @summary)
+            end
+	    redirect to "/#{@new_path}"
         end
 
         get "/*/delete/?" do
