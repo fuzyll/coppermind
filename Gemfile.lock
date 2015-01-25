@@ -1,12 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    git (1.2.8)
-    json (1.7.7)
-    rack (1.5.2)
+    git (1.2.9.1)
+    json (1.8.2)
+    rack (1.6.0)
     rack-protection (1.5.3)
       rack
-    redcarpet (3.1.2)
+    redcarpet (3.2.2)
     shotgun (0.9)
       rack (>= 1.0)
     sinatra (1.4.5)
