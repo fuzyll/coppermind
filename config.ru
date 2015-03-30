@@ -1,5 +1,5 @@
 ##
-# Wiki
+# Coppermind 
 #
 # Copyright (c) 2012-2015 Alexander Taylor <ajtaylor@fuzyll.com>
 #
@@ -42,5 +42,4 @@ end
 
 # run our application
 require "./controller"
-run Wiki::Application
-
+run Coppermind::Application

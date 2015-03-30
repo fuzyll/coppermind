@@ -1,6 +1,6 @@
-<h2>Edit</h2>
-<form action="<%= @path %>/edit" method="post">
-    <textarea id="content" name="content" placeholder="Page Content" required><%= @page %></textarea>
-    <textarea id="summary" name="summary" placeholder="Summary of Changes" required></textarea>
+<h1>Edit</h1>
+<form action="edit/<%= @path %>" method="post">
+    <textarea name="content" placeholder="Page Content" required><%= @page %></textarea>
+    <textarea class="single" name="summary" placeholder="Summary of Changes" required></textarea>
     <input type="submit" value="Commit">
 </form>

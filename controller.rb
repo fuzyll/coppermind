@@ -1,5 +1,5 @@
 ##
-# Wiki
+# Coppermind
 #
 # Copyright (c) 2012-2015 Alexander Taylor <ajtaylor@fuzyll.com>
 #
@@ -17,21 +17,9 @@
 ##
 
 require "./model"
+require "./renderer"
 
-module Wiki
-    # open the pages repository
-    begin
-        Repository = Git.open("./pages")
-    rescue
-        Repository = nil
-    end
-
-    # create a custom markdown renderer with non-standard options turned on
-    renderer = Redcarpet::Render::HTML.new(:filter_html => true, :no_styles => true, :hard_wrap => true)
-    extensions = { :no_intra_emphasis => true, :tables => true, :fenced_code_blocks => true,
-                   :strikethrough => true, :space_after_headers => true, :superscript => true }
-    Markdown = Redcarpet::Markdown.new(renderer, extensions)
-
+module Coppermind
     class Application < Sinatra::Base
         # parse and set settings
         begin
@@ -44,7 +32,40 @@ module Wiki
             abort "Could not parse settings file because: #{e.message}"
         end
 
+        helpers do
+            # function to create table of contents items from markdown
+            def create_toc(markdown)
+                toc = []
+                markdown.lines.each do |line|
+                    # find first and second level headers (actually h2 and h3 - h1 is special and used as page header)
+                    # matched text will be placed in the "text" key
+                    # the \s* here gets around errant whitespace and \r\n line-endings (which will cause $ to not match)
+                    header = /^\s*\#\# (?<text>.*) \#\#\s*$/.match(line)
+                    level = "first"
+                    if not header
+                        header = /^\s*\#\#\# (?<text>.*) \#\#\#\s*$/.match(line)
+                        level = "second"
+                        if not header
+                            next
+                        end
+                    end
+                
+                    # if we were successful in finding a header, add an entry to our table of contents
+                    # link has to be normalized to match what redcarpet will do with :with_toc_data renderer option
+                    # FIXME: normalization here doesn't actually match in all cases...
+                    entry = {
+                        :name => header["text"],
+                        :link => header["text"].downcase.gsub(/[^0-9a-z]/i, ""),
+                        :class => level
+                    }
+                    toc << entry
+                end
+                return toc
+            end
+        end
+
         before do
+            @toc = []
             return erb :error if Repository == nil
         end
 
@@ -53,67 +74,80 @@ module Wiki
         end
 
         get "/?" do
-            redirect to "/main"
+            redirect to "/read/root"
         end
 
-        get "/*/edit/?" do
+        get "/read/?" do
+            redirect to "/read/root"
+        end
+
+        get "/read/*/?" do
+            # get the requested page
+            @path = params[:splat].join("/")
+            @page = Markdown.render(Page.content(@path))
+            @toc = create_toc(Page.content(@path))
+
+            # redirect to the edit interface if the page wasn't found or is blank
+            if @page == "" or not @page
+                redirect to "edit/#{@path}"
+            else
+                return erb :read
+            end
+        end
+
+        get "/edit/*/?" do
             @path = params[:splat].join("/")
             @page = Page.content(@path)
             return erb :edit
         end
 
-        post "/*/edit/?" do
+        post "/edit/*/?" do
             @path = params[:splat].join("/")
             @content = params[:content]
             @summary = params[:summary]  # FIXME: should bail out if summary or content doesn't exist
             Page.update(@path, @content, @summary)
-
-            # send the user to their new page
-            redirect to "/#{@path}"
+            redirect to "/read/#{@path}"
         end
 
-        get "/*/move/?" do
+        get "/move/*/?" do
             @path = params[:splat].join("/")
             return erb :move
         end
 
-        post "/*/move/?" do
+        post "/move/*/?" do
             @path = params[:splat].join("/")
             @new_path = params[:path]
             @summary = params[:summary]  # FIXME: should bail out if new_path or summary doesn't exist
             Page.move(@path, @new_path, @summary)
-            redirect to "/#{@new_path}"
+            redirect to "/read/#{@new_path}"
         end
 
-        get "/*/delete/?" do
+        get "/delete/*/?" do
             @path = params[:splat].join("/")
             return erb :delete
         end
 
-        post "/*/delete/?" do
+        post "/delete/*/?" do
             @path = params[:splat].join("/")
             @summary = params[:summary]  # FIXME: should bail out if summary doesn't exist
             Page.delete(@path, @summary)
-            redirect to "/#{@path}"
+            redirect to "/read/#{@path}"
         end
 
-        get "/*/history/?" do
+        get "/history/*/?" do
             @path = params[:splat].join("/")
-            @history = Page.history(@path)
+            @history = Page.history(@path)  # FIXME: currently broken because of the git gem...
             return erb :history
         end
 
-        get "/*/?" do
-            # get the requested page
-            @path = params[:splat].join("/")
-            @page = Markdown.render(Page.content(@path))
+        get "/list/?" do
+            @list = Dir["./pages/**/*.md"]
+            return erb :list
+        end
 
-            # redirect to the edit interface if the page wasn't found or is blank
-            if @page == ""
-                redirect to "#{@path}/edit"
-            else
-                return erb :show
-            end
+        get "/activity/?" do
+            @history = Page.history("/")  # FIXME: this will break once I fix the problems with history
+            return erb :history
         end
     end
 end

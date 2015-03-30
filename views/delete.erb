@@ -1,6 +1,6 @@
-<h2>Delete</h2>
-<p>Please enter a reason for deleting page <%= @path %>:</p>
-<form action="<%= @path %>/delete" method="post">
-    <textarea id="summary" name="summary" placeholder="Summary of Changes" required></textarea>
+<h1>Delete</h1>
+<p>Please enter a reason for deleting <%= @path %>:</p>
+<form action="delete/<%= @path %>" method="post">
+    <textarea class="single" name="summary" placeholder="Summary of Changes" required></textarea>
     <input type="submit" value="Commit">
 </form>

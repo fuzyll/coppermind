@@ -1,4 +1,7 @@
 {
-    "public_folder": "./content",
-    "base_url": "http://localhost:9393/"
+    "public_folder": "./assets",
+    "base_url": "http://localhost:9292/",
+    "title": "Coppermind",
+    "tagline": "Penny for your thoughts?",
+    "copyright": "2012-2015 fuzyll"
 }

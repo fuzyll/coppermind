@@ -1,0 +1,54 @@
+/*
+ * Basic
+ */
+/* Page */
+body, input, select, textarea { font-size: 12pt; }
+
+
+/*
+ * Wrapper
+ */
+#wrapper { padding: 0; }
+
+
+/*
+ * Layers
+ */
+#title_bar { background: #000000; color: #FFFFFF; min-width: 320px; }
+#title_bar .title {
+    color: #FFFFFF;
+    display: block;
+    font-weight: 700;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 1em;
+    width: 100%;
+    text-align: left;
+}
+#title_bar .toggle {
+    text-decoration: none;
+    height: 4em;
+    position: absolute;
+    top: 0;
+    width: 6em;
+    left: 0;
+}
+#title_bar .toggle:before {
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important;
+}
+#title_bar .toggle:before {
+    background: #400607;
+    color: #FFFFFF;
+    content: 'X';
+    display: block;
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 64px;
+    right: 0;
+}

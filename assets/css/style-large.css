@@ -1,0 +1,17 @@
+/*
+ * Basic
+ */
+/* Page */
+body, input, select, textarea { font-size: 11pt; }
+
+
+/*
+ * Table of Contents
+ */
+section#toc { width: 20em; }
+
+
+/*
+ * Wrapper
+ */
+#wrapper { padding-left: 20em; }

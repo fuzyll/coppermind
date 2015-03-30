@@ -1,5 +1,5 @@
 ##
-# Wiki
+# Coppermind
 #
 # Copyright (c) 2012-2015 Alexander Taylor <ajtaylor@fuzyll.com>
 #
@@ -16,8 +16,14 @@
 # IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ##
 
-module Wiki
-    # FIXME: does this even need to be a class..?
+module Coppermind
+    begin
+        Repository = Git.open("./pages")
+    rescue Exception => e
+        STDERR.puts e.message
+        Repository = nil
+    end
+
     class Page
         def self.content(path)
             begin
@@ -73,16 +79,18 @@ module Wiki
             commits = []
 
             begin
-                Repository.log.object("#{path}.md").each do |entry|
+                Repository.log.each do |entry|  # FIXME: line below is what I want to use, but there's a bug in the gem
+                #Repository.log.object("#{path}.md").each do |entry|
                     commit = {
                         :message => entry.message,
                         :date => entry.date.strftime("%Y-%m-%d at %H:%M:%S %Z"),
                         :author => entry.author.name,
-                        :hash => entry.sha
+                        :hash => entry.sha,
                     }
                     commits << commit
                 end
-            rescue
+            rescue Exception => e
+                STDERR.puts e.message  # FIXME: DEBUG MESSAGE
                 commits = nil
             end
 

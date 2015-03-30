@@ -1,0 +1,363 @@
+@charset "UTF-8";
+
+/*
+ * Color Scheme
+ *
+ * White:  #FFFFFF
+ * Bright: #FFEAAD
+ * Light:  #D4AE51
+ * Pale:   #DE850B
+ * Accent: #C74D00
+ * Dim:    #691805
+ * Dark:   #400607
+ * Black:  #000000
+ */
+
+/*
+ * Generic
+ */
+.inline { display: inline }
+.align-left { text-align: left; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+.overflow-x { overflow-x: auto; }
+.overflow-y { overflow-y: auto; }
+.hidden { visibility: hidden; }   /* for when you want the element to still take up space */
+.really-hidden { display: none; } /* for when you want all traces of the element hidden */
+
+/*
+ * Basic
+ */
+/* Page */
+body {
+    background: #FFEAAD;
+    color: #000000;
+    font-family: "PT Sans", sans-serif;
+    font-size: 14pt;
+    font-weight: 400;
+    line-height: 1.75em;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #000000;
+    font-weight: 700;
+    line-height: 1.5em;
+    margin: 0 0 0.5em 0;
+}
+h1 { font-size: 2.5em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.75em; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 0.75em; }
+
+/* Links */
+a {
+    border-bottom: solid 1px #691805;
+    color: #691805;
+    text-decoration: none;
+}
+a:hover {
+    border-bottom-color: transparent;
+    color: #400607;
+}
+
+/* Paragraphs */
+p { margin-bottom: 2.25em; }
+strong, b { font-weight: 700; }
+em, i { font-style: italic; }
+sub { font-size: 0.8em; position: relative; top: 0.5em; }
+sup { font-size: 0.8em; position: relative; top: -0.5em; }
+
+/* Blocks */
+blockquote {
+    border-left: solid 8px #D4AE51;
+    font-style: italic;
+    margin: 0 0 2.25em 0;
+    padding: 0.5em 0 0.5em 2em;
+}
+code {
+    background: #D4AE51;
+    border-radius: 5px;
+    font-family: "PT Mono", monospace;
+    font-size: 0.9em;
+    margin: 0 0.25em;
+    padding: 0.25em 0.65em;
+}
+pre {
+    font-family: "PT Mono", monospace;
+    font-size: 0.9em;
+    margin: 0 0 2.25em 0;
+}
+pre code {
+    display: block;
+    line-height: 1.5em;
+    overflow-x: auto;
+    padding: 1em 1.5em;
+}
+
+/* Lists */
+ol { margin-bottom: 2.25em; padding-left: 1.25em; list-style: decimal; }
+ol li { padding-left: 0.25em; }
+ul { margin-bottom: 2.25em; padding-left: 1em; list-style: disc; }
+ul li { padding-left: 0.5em; }
+dl { margin: 0 0 2.25em 0; }
+
+/* Tables */
+table { margin-bottom: 2.25em; width: 100%; }
+table tbody tr {
+    border: solid 2px #D4AE51;
+    border-left: 0;
+    border-right: 0;
+}
+table tbody tr:nth-child(2n + 1) { background-color: #D4AE51; }
+table td { padding: 0.75em; }
+table th {
+    color: #000000;
+    font-size: 0.9em;
+    font-weight: 700;
+    padding: 0 0.75em 0.75em 0.75em;
+    text-align: left;
+}
+table thead { border-bottom: solid 4px #C74D00; }
+table tfoot { border-top: solid 4px #C74D00; }
+
+/* Forms */
+form { margin-bottom: 2.25em; }
+label {
+    color: #000000;
+    display: block;
+    font-size: 0.9em;
+    font-weight: 700;
+    margin-bottom: 1.125em;
+}
+select, textarea {
+    background: #FFFFFF;
+    appearance: none;
+    border-radius: 5px;
+    border: none;
+    border: solid 1px #400607;
+    color: inherit;
+    display: block;
+    outline: 0;
+    padding: 0 1em;
+    text-decoration: none;
+    width: 100%;
+}
+select:invalid, textarea:invalid { box-shadow: none; }
+select:focus, textarea:focus { border-color: #C74D00; }
+select { height: 2em; }
+textarea { padding: 0.25em 0.5em; height: 30em; }
+textarea.single { height: 2em; }
+
+/* Buttons */
+input[type="submit"], input[type="reset"], input[type="button"] {
+    background-color: #400607;
+    border-radius: 5px;
+    border: 0;
+    color: #FFEAAD;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    height: 2em;
+    line-height: 2em;
+    padding: 0 1em;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover {
+    background-color: #691805;
+}
+
+
+/*
+ * Menu
+ */
+section#menu {
+    background: #000000;
+    color: #FFEAAD;
+    height: 2.5em;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+section#menu > nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 20em;
+}
+section#menu > nav ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 0 3em;
+}
+section#menu > nav ul li a {
+    border: 0;
+    color: #FFEAAD;
+    display: block;
+    padding: 0.5em 0;
+    text-decoration: none;
+    position: relative;
+}
+section#menu > nav ul li a:hover { color: #D4AE51; }
+
+
+/*
+ * Table of Contents
+ */
+section#toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16em;
+    height: 100%;
+    background: #000000;
+    color: #FFEAAD;
+    text-align: center;
+    overflow-y: auto;
+}
+section#toc h1, { color: #FFEAAD; }
+section#toc h1 a { color: #FFEAAD; border-bottom-color: transparent; }
+section#toc h1 a:hover { color: #D4AE51; }
+section#toc header p { color: #D4AE51; }
+section#toc > header { padding: 1em 0; }
+section#toc > header h1 { margin: 0; font-size: 1.75em; }
+section#toc > header p {
+    color: #D4AE51;
+    font-style: italic;
+    margin-top: 1em;
+}
+section#toc > nav { padding: 1em 0; }
+section#toc > nav.toc { background: #400607; }
+section#toc > nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+section#toc > nav ul li {
+    display: block;
+    padding: 0;
+}
+section#toc > nav ul li a {
+    transition: none;
+    border: 0;
+    color: #FFEAAD;
+    display: block;
+    padding: 0.5em 0;
+    text-decoration: none;
+}
+section#toc > nav ul li a:hover { background: #400607; color: #D4AE51; }
+section#toc > nav.toc ul li a {
+    transition: none;
+    border: 0;
+    color: #FFEAAD;
+    display: block;
+    padding: 0.25em 0;
+    text-decoration: none;
+}
+section#toc > nav.toc ul li a.first { text-align: left; padding-left: 2em; font-weight: bold; }
+section#toc > nav.toc ul li a.second { text-align: left; padding-left: 3em; }
+section#toc > nav.toc ul li a:hover { color: #D4AE51; }
+
+
+/*
+ * Wrapper
+ */
+#wrapper { background: #FFEAAD; padding-left: 16em; }
+
+
+/*
+ * Page
+ */
+section#page > .container { padding: 4em 0 2em 0; }
+section#page h1, h2, h3, h4, h5, h6 { font-family: "PT Serif", serif; }
+section#page h2 { width: 100%; border-bottom: solid 1px #400607; }
+
+
+/*
+ * Footer
+ */
+section#footer {
+    background: #D4AE51;
+    border-top: 0;
+    color: #000000;
+    overflow: hidden;
+    padding: 4em 0 2em 0;
+}
+section#footer .copyright {
+    line-height: 1em;
+    list-style: none;
+    padding: 0;
+}
+section#footer .copyright li {
+    border-left: solid 1px #D4AE51;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 1em;
+    padding-left: 1em;
+}
+section#footer .copyright li:first-child {
+    border-left: 0;
+    margin-left: 0;
+    padding-left: 0;
+}
+section#footer .copyright li a { color: inherit; }
+
+
+/*
+ * Font Faces
+ */
+/* PT Mono */
+@font-face {
+    font-family: "PT Mono"; font-style: normal; font-weight: 400;
+    src: local("PT Mono"), local("PTMono-Regular"),
+         url("woff/paratype-mono.woff") format("woff");
+}
+
+/* PT Sans */
+@font-face {
+    font-family: "PT Sans"; font-style: normal; font-weight: 400;
+    src: local("PT Sans"), local("PTSans-Regular"), 
+         url("woff/paratype-sans.woff") format("woff");
+}
+@font-face {
+    font-family: "PT Sans"; font-style: normal; font-weight: 700;
+    src: local("PT Sans Bold"), local("PTSans-Bold"),
+         url("woff/paratype-sans-bold.woff") format("woff");
+}
+@font-face {
+    font-family: "PT Sans"; font-style: italic; font-weight: 400;
+    src: local("PT Sans Italic"), local("PTSans-Italic"),
+         url("woff/paratype-sans-italic.woff") format("woff");
+}
+@font-face {
+    font-family: "PT Sans"; font-style: italic; font-weight: 700;
+    src: local("PT Sans Bold Italic"), local("PTSans-BoldItalic"),
+         url("woff/paratype-sans-bold-italic.woff") format("woff");
+}
+
+/* PT Serif */
+@font-face {
+    font-family: "PT Serif"; font-style: normal; font-weight: 400;
+    src: local("PT Serif"), local("PTSerif-Regular"),
+         url("woff/paratype-serif.woff") format("woff");
+}
+@font-face {
+  font-family: "PT Serif"; font-style: normal; font-weight: 700;
+  src: local("PT Serif Bold"), local("PTSerif-Bold"),
+       url("woff/paratype-serif-bold.woff") format("woff");
+}
+@font-face {
+  font-family: "PT Serif"; font-style: italic; font-weight: 400;
+  src: local("PT Serif Italic"), local("PTSerif-Italic"),
+       url("woff/paratype-serif-italic.woff") format("woff");
+}
+@font-face {
+  font-family: "PT Serif"; font-style: italic; font-weight: 700;
+  src: local("PT Serif Bold Italic"), local("PTSerif-BoldItalic"),
+       url("woff/paratype-serif-bold-italic.woff") format("woff");
+}

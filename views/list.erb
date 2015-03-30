@@ -1,0 +1,6 @@
+<ul>
+<% @list.each do |entry| %>
+    <% link = entry[0..-4].sub("./pages", "show") %>
+    <li><a href="<%= link %>"><%= link.sub("show/", "") %></a></li>
+<% end %>
+</ul>

@@ -1,0 +1,30 @@
+/*
+ * Basic
+ */
+/* Page */
+body, input, select, textarea { font-size: 12pt; }
+h1 br, h2 br, h3 br, h4 br, h5 br, h6 br { display: none; }
+h2 { font-size: 1.75em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1em; }
+
+
+/*
+ * Footer
+ */
+section#footer { text-align: center; }
+section#footer .copyright li {
+    border-left: 0;
+    display: block;
+    line-height: 1.75em;
+    margin: 0.75em 0 0 0;
+    padding-left: 0;
+}
+section#footer .copyright li:first-child { margin-top: 0; }
+
+
+/*
+ * Layers
+ */
+#title_bar .toggle { height: 4em; width: 6em; }
+#title_bar .toggle:before { font-size: 14px; width: 44px; }
