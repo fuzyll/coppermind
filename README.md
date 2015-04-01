@@ -29,6 +29,18 @@ This will start Coppermind running on http://localhost:9292 on your local machin
 Coppermind may also be used with a traditional web server like Apache or Nginx through Passenger.
 Documentation for this is outside the scope of this document at this time.
 
+## Issues ##
+
+The following are known issues:
+
+* The Git gem doesn't handle logging properly. As a result, per-file logs simply cannot work.
+* Redcarpet's auto-generated header IDs don't de-conflict matching IDs.
+  If you have two sub-sections named "Tasks", both will have the ID "tasks".
+  This causes the table of contents links on the left to not work as expected.
+  Clicking either "Tasks" link will take you to the first "tasks" ID.
+* Clicking items in the table of contents causes its anchor to be moved to the top of the page, covered by the menu.
+* The title bar covers the menu bar and doesn't inherit its items as expected on lower resolutions.
+
 ## Roadmap ##
 
 Short-Term:
